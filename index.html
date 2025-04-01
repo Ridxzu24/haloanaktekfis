@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Anak Tekfis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-image: url('gambar.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #333;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: #4a6fa5;
+        }
+
+        p {
+            margin-bottom: 30px;
+            color: #ffffff;
+            font-size: 1.1rem;
+        }
+
+        .show-btn {
+            background-color: #4a6fa5;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+
+        .show-btn:hover {
+            background-color: #3a5a80;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .show-btn:active {
+            transform: translateY(1px);
+        }
+
+        .gallery {
+            display: none;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .photo-card {
+            width: 300px;
+            height: 350px;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .photo-card:first-child {
+            height: 380px;
+        }
+
+        .photo-card:first-child .photo-img {
+            height: 280px;
+            object-position: center 25%;
+        }
+
+        .photo-card.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .photo-card:nth-child(1).show {
+            transition-delay: 0.1s;
+        }
+        .photo-card:nth-child(2).show {
+            transition-delay: 0.3s;
+        }
+        .photo-card:nth-child(3).show {
+            transition-delay: 0.5s;
+        }
+
+        .photo-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            object-position: center;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-info {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .photo-title {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: #333;
+        }
+
+        .photo-desc {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .gallery {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .photo-card {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Galerry Singkat Sosok Anomali</h1>
+        <p>Klik tombol di bawah untuk melihat foto sosok anomali</p>
+        
+        <button class="show-btn" id="showGalleryBtn">Tampilkan Foto</button>
+        
+        <div class="gallery" id="photoGallery">
+            <div class="photo-card">
+                <img src="pia1.jpg" alt="Pia" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Muka Sigma</h3>
+                    <p class="photo-desc">Sigma banget kamu bang</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="pia2.jpg" alt="Pia" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Primadona</h3>
+                    <p class="photo-desc">ini foto cakep banget bang</p>
+                </div>
+            </div>
+
+            <div class="photo-card">
+                <img src="pia3.jpg" alt="Pia" class="photo-img">
+                <div class="photo-info">
+                    <h3 class="photo-title">Ekspresi Mau Eskrim</h3>
+                    <p class="photo-desc">Mau eskrim kah bang</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Gallery foto sosok anomali.</p>
+    </footer>
+
+    <!-- Elemen Audio (Hidden) -->
+    <audio id="bgMusic" autoplay loop>
+        <source src="fixyou.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Fungsi Gallery
+            const showBtn = document.getElementById('showGalleryBtn');
+            const gallery = document.getElementById('photoGallery');
+            const photoCards = document.querySelectorAll('.photo-card');
+            
+            let isGalleryVisible = false;
+            
+            showBtn.addEventListener('click', function() {
+                if (!isGalleryVisible) {
+                    gallery.style.display = 'flex';
+                    
+                    photoCards.forEach((card, index) => {
+                        setTimeout(() => {
+                            card.classList.add('show');
+                        }, index * 200);
+                    });
+                    
+                    showBtn.textContent = 'Sembunyikan Foto';
+                    isGalleryVisible = true;
+                } else {
+                    photoCards.forEach(card => {
+                        card.classList.remove('show');
+                    });
+                    
+                    setTimeout(() => {
+                        gallery.style.display = 'none';
+                    }, 500); // Sesuaikan dengan durasi transisi CSS
+                    
+                    showBtn.textContent = 'Tampilkan Foto';
+                    isGalleryVisible = false; // Ini yang diperbaiki (typo sebelumnya: isGalleryPlaying)
+                }
+            });
+            
+            // Efek hover pada card
+            photoCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                    this.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.2)';
+                    this.querySelector('.photo-img').style.transform = 'scale(1.05)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    this.style.boxShadow = '0 10px 20px rgba(0, 0, 0, 0.1)';
+                    this.querySelector('.photo-img').style.transform = 'scale(1)';
+                });
+            });
+    
+            // Fungsi Musik Otomatis
+            const bgMusic = document.getElementById('bgMusic');
+            bgMusic.volume = 0.3;
+            
+            function playAudio() {
+                bgMusic.play().catch(error => {
+                    document.addEventListener('click', function initAudio() {
+                        bgMusic.play();
+                        document.removeEventListener('click', initAudio);
+                    }, { once: true });
+                });
+            }
+            
+            playAudio();
+        });
+    </script>
